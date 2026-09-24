@@ -30,3 +30,41 @@ void Led_Water(void)
     osDelay(200);
 
 }
+
+void Led_ON(uint8_t led_id)
+{
+    switch (led_id)
+    {
+        case 0U:
+            LED_ON(1);
+            break;
+        case 1U:
+            LED_ON(2);
+            break;
+        case 2U:
+            LED_ON(3);
+            break;
+        case 3U:
+            LED_ON(4);       
+            break;
+    }
+}
+
+void Led_OFF(uint8_t led_id)
+{
+    switch (led_id)
+    {
+        case 0U:
+            LED_OFF(1);
+            break;
+        case 1U:
+            LED_OFF(2);
+            break;
+        case 2U:
+            LED_OFF(3);
+            break;
+        case 3U:
+            LED_OFF(4);       
+            break;
+    }
+}

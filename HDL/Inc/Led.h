@@ -15,6 +15,8 @@
 /* ------------------------------------- Function -------------------------- */
 
 void Led_Water(void);
+void Led_ON(uint8_t led_id);
+void Led_OFF(uint8_t led_id);
 
 
 #endif /* LED_H */

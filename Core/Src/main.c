@@ -116,6 +116,18 @@ int main(void)
   #if USE_ZMDR
   ZdriveInit();
   #endif
+
+  leds_init();
+
+  while (1)
+  {
+    check_result ch_re = check_handling();
+
+    if ((ch_re == CHECK_OK) || (ch_re == CHECK_BUSY))
+    {
+      break;
+    }
+  }
   /* USER CODE END 2 */
 
   /* Init scheduler */
