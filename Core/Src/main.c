@@ -117,17 +117,29 @@ int main(void)
   ZdriveInit();
   #endif
 
-  leds_init();
+  check_result err_flag;
 
   while (1)
   {
     check_result ch_re = check_handling();
 
-    if ((ch_re == CHECK_OK) || (ch_re == CHECK_BUSY))
+    if ((ch_re == CHECK_ALL_OK) || (ch_re == CHECK_SKIPPED))
     {
+      Beep_OK();
+      break;
+    }
+    else if (ch_re == CHECK_BUSY)
+    {
+      continue;
+    }
+    else
+    {
+      err_flag = ch_re;
       break;
     }
   }
+
+  Show_Error(err_flag);
   /* USER CODE END 2 */
 
   /* Init scheduler */

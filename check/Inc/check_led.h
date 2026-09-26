@@ -4,10 +4,11 @@
 #include "main.h"
 #include "check_process.h"
 #include "Led.h"
+#include "show_error.h"
 
 #define OFF              0U
 #define ON               1U
-#define CHECK_LED_CONUTS 3U
+#define CHECK_LED_COUNTS 3U
 
 extern volatile check_param c_params;
 
@@ -23,9 +24,9 @@ typedef struct
     volatile uint8_t cur_led;
     leds_param       ind_led[LED_NUM];
     timer            led_timer;
+    uint8_t          led_start;
 }all_leds;
 
-void leds_init(void);
 check_result led_checking(void);
 
 #endif

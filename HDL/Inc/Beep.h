@@ -11,6 +11,7 @@
 
 /*----------------------- Function ---------------------*/
 void Beep_Init(void);
+void Beep_OK(void);
 void Beep_Alarm(uint8_t times);
 
 #endif

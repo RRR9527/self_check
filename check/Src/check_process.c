@@ -2,13 +2,13 @@
 
 check_param c_params = 
 {
-    .check_cur_state = CHECKING_DEFUALT,
+    .check_cur_state = CHECKING_DEFAULT,
     .Check_Timer = {.timer_state = Timer_OFF, .begin_tick = 0U, .duration = TIME_OUT_TICK}
 };
 
 uint8_t time_expire(timer Timer)
 {
-    if (!Timer.timer_state == Timer_ON)
+    if (Timer.timer_state != Timer_ON)
     {
         return 0U;
     }
@@ -30,7 +30,7 @@ check_result check_handling(void)
         c_params.check_cur_state == CHECKING_DISABLE
     )
     {
-        return ;
+        return CHECK_SKIPPED;
     }
 
     if (!c_params.Check_Timer.timer_state)
@@ -46,7 +46,7 @@ check_result check_handling(void)
 
     switch (c_params.check_cur_state)
     {
-        case (CHECKING_DEFUALT):
+        case (CHECKING_DEFAULT):
         {
             c_params.check_cur_state = CHECKING_LED;
             c_params.Check_Timer.timer_state = Timer_ON;            
@@ -58,15 +58,37 @@ check_result check_handling(void)
         {
             if (led_checking() == CHECK_OK)
             {
-                c_params.check_cur_state = CHECKING_LED;
+                c_params.check_cur_state = CHECKING_CAN1;
             }
             c_params.Check_Timer.begin_tick  = HAL_GetTick();
             break;
         }
 
-        case (CHECKING_MASTERSLAVE_CONNECTION):
+        case (CHECKING_CAN1):
         {
-            
+            check_result CAN1_re = can1_checking();
+
+            switch (CAN1_re)
+            {
+                case CHECK_BUSY:
+                {
+                    break;
+                }
+                case CHECK_OK:
+                {
+                    c_params.check_cur_state = CHECKING_CAN2;
+                    break;
+                }
+                case CHECK_CAN1_TX_ERROR:
+                case CHECK_CAN1_RX_ERROR:
+                {
+                    return CAN1_re;
+                    break;
+                }
+            }
+
+            c_params.Check_Timer.begin_tick  = HAL_GetTick();
+            break;
         }
     }
 
