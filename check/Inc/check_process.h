@@ -21,7 +21,7 @@ typedef enum
 
 typedef enum 
 {
-    CHECKING_DEFUALT = 0U,
+    CHECKING_DEFAULT = 0U,
     CHECKING_DISABLE,
     CHECKING_TIME_OUT,
     CHECKING_LED,    
